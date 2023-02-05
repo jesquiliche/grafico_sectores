@@ -1,11 +1,10 @@
+# Importa las librerías necesarias para la aplicación
 import decimal
 import sqlite3
 import dbutil
-
 from sqlite3.dbapi2 import Cursor
 from tkinter import *
 from tkinter import Tk
-
 from tkinter import ttk
 from decimal import *
 from tkinter import messagebox
@@ -14,9 +13,10 @@ from tkinter.colorchooser import askcolor
 from PIL import ImageTk, Image
 from seleccion_grafico import UI
 
-
+# Crea la ventana principal
 window = Tk()
 
+# Variables para almacenar valores seleccionados
 var=IntVar()
 var2=IntVar()
 var3=IntVar()
@@ -24,46 +24,54 @@ var3=IntVar()
 entry_var =StringVar()
 entry_var2=StringVar()
 
+# Conexión a la base de datos
 conn=sqlite3.connect("grafico.db")
 
-
+# Función para seleccionar un color
 def sel_color():
+    # Selecciona un color
     micolor=askcolor(color=None)
+    # Establece el color en la variable entry_var
     entry_var.set(micolor[1])
+    # Configura el fondo del texto txt_Color con el color seleccionado
     txt_Color.configure({"background": micolor[1]})
-    
-    #lbl_Color.configure({"background": micolor[1]})
-    
-    
 
+# Función para establecer el color de texto
 def fg_color():
+    # Selecciona un color
     micolor=askcolor(color=None)
+    # Establece el color en la variable entry_var2
     entry_var2.set(micolor[1])
-    print(micolor[1])
+    # Configura el color de texto de los textos txt_fg y txt_Color con el color seleccionado
     txt_fg.configure({"fg": micolor[1]})
     txt_Color.configure({"fg": micolor[1]})
 
-
-
-
-
+# Configura el título de la ventana
 window.title("Graficos de sectores")
 
-#Dimensiones de la ventana
+# Dimensiones de la ventana
 ancho_ventana = 950
 alto_ventana = 540
 
-#Centrar la ventana
+# Función para centrar la ventana en la pantalla
 def centrar_ventana(win):
+    # Cálcula la posición x y y de la ventana
     x_ventana = win.winfo_screenwidth() // 2 - ancho_ventana // 2
     y_ventana = win.winfo_screenheight() // 2 - alto_ventana // 2
+    # Deshabilita la capacidad de redimensionar la ventana
     win.resizable(False,False)
-
+    # Establece la posición y tamaño de la ventana
     posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
     win.geometry(posicion)
 
+# Llama a la función para centrar la ventana
 centrar_ventana(window)
 
+# Crea un marco para los datos de las
+
+
+
+# Crea el cuadro para los datos introducidos
 frame=LabelFrame(window,text="Datos filas",width=ancho_ventana-40,height=250,font=("Arial Bold", 13))
 frame.place(x=0,y=0)
 frame.grid(row=0,column=0,pady=20,padx=20)
@@ -100,6 +108,7 @@ validate="key",validatecommand=(frame.register(validate_entry), ""))
 
 
 txt_Titulo=Entry(frame2,width=34,font=("Arial Bold", 13))
+
 
 lbl_check=Label(frame, text="Extraer:",font=("Arial Bold", 13))
 checkbox = ttk.Checkbutton(frame,variable=var,onvalue=1,offvalue=0)
